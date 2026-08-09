@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpersp1234567"]
+
+[ext_resource type="Script" path="res://scenes/mechanics/perspective_puzzle.gd" id="1_persp_script"]
+[ext_resource type="Shader" path="res://assets/shaders/cel_shader.gdshader" id="2_cel_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_shards"]
+render_priority = 0
+shader = ExtResource("2_cel_shader")
+shader_parameter/albedo_color = Color(0.95, 0.75, 0.3, 1)
+shader_parameter/specular_color = Color(1, 1, 0.8, 1)
+shader_parameter/glossiness = 64.0
+shader_parameter/rim_color = Color(1, 0.9, 0.5, 1)
+shader_parameter/rim_threshold = 0.4
+shader_parameter/rim_smoothness = 0.05
+shader_parameter/toon_steps = 3
+
+[sub_resource type="PrismMesh" id="PrismMesh_shard"]
+material = SubResource("ShaderMaterial_shards")
+size = Vector3(1, 1.5, 1)
+
+[node name="PerspectivePuzzle" type="Node3D" node_paths=PackedStringArray("target_camera_position", "target_view_direction")]
+script = ExtResource("1_persp_script")
+target_camera_position = NodePath("FocalPoint")
+target_view_direction = NodePath("MeshShards")
+
+[node name="MeshShards" type="Node3D" parent="."]
+
+[node name="ShardMesh" type="MeshInstance3D" parent="MeshShards"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("PrismMesh_shard")
+
+[node name="FocalPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 4)

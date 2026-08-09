@@ -1,0 +1,88 @@
+[gd_scene load_steps=14 format=3 uid="uid://cmainlevel123"]
+
+[ext_resource type="Script" path="res://scenes/levels/main_level.gd" id="1_lvl_script"]
+[ext_resource type="PackedScene" uid="uid://cplayer123456" path="res://scenes/player/player.tscn" id="2_player_scene"]
+[ext_resource type="PackedScene" uid="uid://cphaseobj12345" path="res://scenes/mechanics/phase_object.tscn" id="3_phase_scene"]
+[ext_resource type="PackedScene" uid="uid://cpersp1234567" path="res://scenes/mechanics/perspective_puzzle.tscn" id="4_persp_scene"]
+[ext_resource type="PackedScene" uid="uid://cdialoguebox123" path="res://scenes/narrative/dialogue_box.tscn" id="5_dlg_scene"]
+[ext_resource type="Script" path="res://scenes/narrative/narrative_trigger.gd" id="6_trig_script"]
+[ext_resource type="Shader" path="res://assets/shaders/post_process_fog.gdshader" id="7_post_shader"]
+[ext_resource type="PackedScene" uid="uid://chud1234567" path="res://scenes/ui/hud.tscn" id="8_hud_scene"]
+[ext_resource type="PackedScene" uid="uid://cpausemenu1234" path="res://scenes/ui/pause_menu.tscn" id="9_pause_scene"]
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 1
+background_color = Color(0.04, 0.06, 0.12, 1)
+ambient_light_color = Color(0.2, 0.25, 0.35, 1)
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.8
+glow_bloom = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_post"]
+shader = ExtResource("7_post_shader")
+shader_parameter/fog_color_near = Color(0.05, 0.08, 0.15, 1)
+shader_parameter/fog_color_far = Color(0.85, 0.6, 0.3, 1)
+shader_parameter/fog_density = 0.04
+shader_parameter/fog_start = 5.0
+shader_parameter/fog_end = 80.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(40, 1, 40)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_trig"]
+size = Vector3(10, 4, 10)
+
+[node name="MainLevel" type="Node3D"]
+script = ExtResource("1_lvl_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.353, 0.353, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 10, 0)
+light_color = Color(0.9, 0.85, 0.75, 1)
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_floor")
+
+[node name="Player" parent="." instance=ExtResource("2_player_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="PhaseObjectPlatform" parent="." instance=ExtResource("3_phase_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -8)
+
+[node name="PerspectivePuzzle" parent="." instance=ExtResource("4_persp_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+
+[node name="HUD" parent="." instance=ExtResource("8_hud_scene")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("9_pause_scene")]
+
+[node name="DialogueBox" parent="." instance=ExtResource("5_dlg_scene")]
+
+[node name="IntroNarrativeTrigger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+script = ExtResource("6_trig_script")
+trigger_id = "intro"
+speaker_name = "Lumina Echo"
+dialogue_text = "Die Sternwarte ruht im ewigen Eis... Benutze 'F' um das Chrono-Spektrum deiner Laterne zu wechseln."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="IntroNarrativeTrigger"]
+shape = SubResource("BoxShape3D_trig")
+
+[node name="PostProcessLayer" type="CanvasLayer" parent="."]
+layer = 90
+
+[node name="ColorRect" type="ColorRect" parent="PostProcessLayer"]
+material = SubResource("ShaderMaterial_post")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

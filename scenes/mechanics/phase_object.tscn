@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cphaseobj12345"]
+
+[ext_resource type="Script" path="res://scenes/mechanics/phase_object.gd" id="1_phase_script"]
+[ext_resource type="Shader" path="res://assets/shaders/cel_shader.gdshader" id="2_cel_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_phase"]
+render_priority = 0
+shader = ExtResource("2_cel_shader")
+shader_parameter/albedo_color = Color(0.2, 0.6, 0.9, 1)
+shader_parameter/specular_color = Color(1, 1, 1, 1)
+shader_parameter/glossiness = 32.0
+shader_parameter/rim_color = Color(0.4, 0.8, 1, 1)
+shader_parameter/rim_threshold = 0.5
+shader_parameter/rim_smoothness = 0.05
+shader_parameter/toon_steps = 3
+
+[sub_resource type="BoxMesh" id="BoxMesh_phase"]
+material = SubResource("ShaderMaterial_phase")
+size = Vector3(3, 0.5, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_phase"]
+size = Vector3(3, 0.5, 3)
+
+[node name="PhaseObject" type="StaticBody3D"]
+script = ExtResource("1_phase_script")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_phase")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_phase")

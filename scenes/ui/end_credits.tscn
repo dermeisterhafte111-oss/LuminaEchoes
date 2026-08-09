@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=3 uid="uid://cendcredits123"]
+
+[ext_resource type="Script" path="res://scenes/ui/end_credits.gd" id="1_credits_script"]
+
+[node name="EndCredits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_credits_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.06, 0.12, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.75, 0.3, 1)
+theme_override_font_sizes/font_size = 36
+text = "LUMINA ECHOES"
+horizontal_alignment = 1
+
+[node name="CreditsText" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
+text = "Das Sternenfeuer leuchtet erneut in der Stille des Alls.
+Vielen Dank fürs Spielen!
+
+-- CREDITS --
+
+Game Design & Lead Development: Senior Developer
+Visual Style & Shaders: Stylized Cel-Shading & Post-Processing
+Engine: Godot Engine 4 (GDScript)
+CI/CD Pipeline: GitHub Actions
+"
+horizontal_alignment = 1
+
+[node name="ReturnButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "ZUM HAUPTMENÜ"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ReturnButton" to="." method="_on_return_button_pressed"]
