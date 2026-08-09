@@ -41,8 +41,8 @@ func _play_procedural_chime(freq: float, duration: float) -> void:
 		var byte_val = int(clamp((sample_val + 1.0) * 127.5, 0, 255))
 		buffer.append(byte_val)
 		
-	var stream = AudioStreamWav.new()
-	stream.format = AudioStreamWav.FORMAT_8_BITS
+	var stream = AudioStreamWAV.new()
+	stream.format = AudioStreamWAV.FORMAT_8_BITS
 	stream.mix_rate = sample_rate
 	stream.data = buffer
 	
@@ -65,8 +65,8 @@ func _play_procedural_click(freq: float, duration: float) -> void:
 		var byte_val = int(clamp((sample_val + 1.0) * 127.5, 0, 255))
 		buffer.append(byte_val)
 		
-	var stream = AudioStreamWav.new()
-	stream.format = AudioStreamWav.FORMAT_8_BITS
+	var stream = AudioStreamWAV.new()
+	stream.format = AudioStreamWAV.FORMAT_8_BITS
 	stream.mix_rate = sample_rate
 	stream.data = buffer
 	

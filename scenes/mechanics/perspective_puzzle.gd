@@ -7,9 +7,9 @@ signal alignment_lost
 
 @export var target_camera_position: Node3D
 @export var target_view_direction: Node3D
-@export float_range(0.85, 0.999) var alignment_threshold: float = 0.97
-@export float var position_threshold_distance: float = 1.5
-@export float var required_hold_time: float = 1.2
+@export_range(0.85, 0.999) var alignment_threshold: float = 0.97
+@export var position_threshold_distance: float = 1.5
+@export var required_hold_time: float = 1.2
 
 @export var puzzle_id: String = "puzzle_01"
 

@@ -24,12 +24,12 @@ jobs:
 
       - name: Setup Godot Export Templates
         run: |
-          mkdir -v -p ~/.local/share/godot/build_templates/4.2.1.stable
-          mv /root/.local/share/godot/build_templates/4.2.1.stable/* ~/.local/share/godot/build_templates/4.2.1.stable/ || true
+          mkdir -p ~/.local/share/godot/export_templates/4.2.1.stable
+          cp -r /root/.local/share/godot/export_templates/4.2.1.stable/* ~/.local/share/godot/export_templates/4.2.1.stable/ || true
 
       - name: Prepare Build Output Directory
         run: |
-          mkdir -v -p builds
+          mkdir -p builds
 
       - name: Export Windows Desktop Binary
         run: |
